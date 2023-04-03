@@ -6,7 +6,7 @@ mod telemetry;
 
 #[tokio::main]
 pub async fn start_server() {
-    let subscriber = telemetry::get_subscriber("backend".into(), "info".into(), std::io::stdout);
+    let subscriber = telemetry::get_subscriber("info".into(), std::io::stdout);
     telemetry::init_subscriber(subscriber);
 
     let app = Router::new().route("/", get(root));
