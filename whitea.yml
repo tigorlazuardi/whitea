@@ -4,4 +4,4 @@ backend:
     log_level: info
     ytdlp:
         # env variable is supported.
-        download_dir: $HOME/Videos
+        download_dir: ~/Videos

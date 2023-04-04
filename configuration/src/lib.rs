@@ -1,3 +1,10 @@
+use std::{
+    env::current_dir,
+    path::{Path, PathBuf},
+};
+
+use color_eyre::Result;
+use config::{Config, ConfigError, Environment, File, FileFormat};
 use serde::{Deserialize, Serialize};
 
 mod backend_config;
@@ -11,14 +18,40 @@ pub struct Configuration {
     pub backend: BackendConfig,
 }
 
-static DEFAULT_CONFIG: &str = include_str!("../../default_config.yml");
+impl Configuration {
+    /// Dump the configuration as a YAML string.
+    pub fn dump_as_yaml(&self) -> Result<String> {
+        let s = serde_yaml::to_string(&self)?;
+        Ok(s)
+    }
 
-pub fn get_configuration() -> Result<Configuration, config::ConfigError> {
-    let cfg = config::Config::builder()
-        .add_source(config::File::from_str(
-            DEFAULT_CONFIG,
-            config::FileFormat::Yaml,
-        ))
+    /// Write the configuration to a file in given path.
+    pub fn write_config<P: AsRef<Path>>(&self, path: P) -> Result<()> {
+        let s = self.dump_as_yaml()?;
+        std::fs::write(path, s)?;
+        Ok(())
+    }
+
+    /// Write the configuration to the default path.
+    pub fn write_config_to_default_path(&self) -> Result<()> {
+        self.write_config(default_config_path().join("whitea.yml"))
+    }
+}
+
+fn default_config_path() -> PathBuf {
+    dirs::config_dir()
+        .expect("failed to find user's config dir for current os")
+        .join("whitea")
+}
+
+static DEFAULT_CONFIG: &str = include_str!("../../whitea.yml");
+
+pub fn get_configuration() -> Result<Configuration, ConfigError> {
+    let cfg = Config::builder()
+        .add_source(File::from_str(DEFAULT_CONFIG, FileFormat::Yaml))
+        .add_source(File::from(default_config_path().join("whitea")).required(false))
+        .add_source(File::from(current_dir().unwrap().join("whitea")).required(false))
+        .add_source(Environment::with_prefix("whitea").separator("__"))
         .build()?;
 
     cfg.try_deserialize()
