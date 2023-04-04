@@ -11,9 +11,9 @@ where
     let env_filter =
         EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new(env_filter));
     let formatting_layer = Layer::default()
-        .with_target(true)
-        .with_file(true)
-        .with_line_number(true)
+        // .with_target(true)
+        // .with_file(true)
+        // .with_line_number(true)
         .with_writer(sink);
     Registry::default().with(env_filter).with(formatting_layer)
 }
