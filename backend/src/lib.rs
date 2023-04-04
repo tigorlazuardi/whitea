@@ -16,7 +16,7 @@ pub async fn start_server(cfg: Configuration) -> Result<()> {
     let addr = format!("{}:{}", cfg.backend.host, cfg.backend.port);
     let socket_addr = addr
         .parse::<SocketAddr>()
-        .wrap_err_with(|| format!("unable to parse address from '{addr}'"))?;
+        .wrap_err_with(|| format!("unable to parse <host>:<port> address from '{addr}'"))?;
     tracing::info!("server listening on {addr}");
     axum::Server::bind(&socket_addr)
         .serve(app.into_make_service())
@@ -25,5 +25,5 @@ pub async fn start_server(cfg: Configuration) -> Result<()> {
 }
 
 async fn root() -> &'static str {
-    "Hello, World!"
+    "Ok"
 }
