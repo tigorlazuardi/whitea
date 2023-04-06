@@ -1,0 +1,12 @@
+{
+  "tabWidth": 4,
+  "svelteSortOrder" : "options-styles-scripts-markup",
+  "svelteStrictMode": false,
+  "svelteBracketNewLine": false,
+  "svelteAllowShorthand": false,
+  "svelteIndentScriptAndStyle": false,
+  "plugins": [
+    "prettier-plugin-svelte",
+    "prettier-plugin-tailwindcss"
+  ]
+}
