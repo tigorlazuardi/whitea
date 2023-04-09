@@ -68,7 +68,12 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
-      drawer: width < 600 ? CustomSidebar(child: Container()) : null,
+      drawer: width < 600
+          ? CustomSidebar(
+              closeOnSelection: true,
+              child: Container(),
+            )
+          : null,
     );
   }
 }

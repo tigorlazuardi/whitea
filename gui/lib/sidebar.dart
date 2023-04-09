@@ -4,40 +4,40 @@ import 'package:flutter/material.dart';
 class CustomSidebar extends StatelessWidget {
   final Widget child;
   final bool enable;
-  final bool closeOnTap;
+  final bool closeOnSelection;
 
   const CustomSidebar({
     super.key,
     required this.child,
     this.enable = true,
-    this.closeOnTap = false,
+    this.closeOnSelection = false,
   });
+
+  Function onPressed(BuildContext context) {
+    return () {
+      if (closeOnSelection) {
+        Navigator.of(context).pop();
+      }
+    };
+  }
 
   List<CollapsibleItem> _items(BuildContext context) {
     return [
       CollapsibleItem(
         text: 'Download',
         icon: Icons.download,
-        onPressed: () {
-          if (closeOnTap) {
-            Navigator.of(context).pop();
-          }
-        },
+        onPressed: onPressed(context),
         isSelected: true,
       ),
       CollapsibleItem(
         text: 'Search',
         icon: Icons.search,
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
+        onPressed: onPressed(context),
       ),
       CollapsibleItem(
         text: 'Settings',
         icon: Icons.settings,
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
+        onPressed: onPressed(context),
       ),
     ];
   }
