@@ -1,17 +1,20 @@
 use std::{
     env::current_dir,
+    fs,
     path::{Path, PathBuf},
 };
 
-use color_eyre::Result;
+use color_eyre::{eyre::Context, Result};
 use config::{Config, ConfigError, Environment, File, FileFormat};
 use serde::{Deserialize, Serialize};
 
 mod backend_config;
 mod shell_string;
+mod ytdlp;
 
 pub use backend_config::*;
 pub use shell_string::*;
+pub use ytdlp::*;
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, PartialOrd)]
 pub struct Configuration {
@@ -34,6 +37,12 @@ impl Configuration {
 
     /// Write the configuration to the default path.
     pub fn write_config_to_default_path(&self) -> Result<()> {
+        fs::create_dir_all(default_config_path()).wrap_err_with(|| {
+            format!(
+                "failed to create directory at {}",
+                default_config_path().to_string_lossy()
+            )
+        })?;
         self.write_config(default_config_path().join("whitea.yml"))
     }
 }
@@ -54,5 +63,5 @@ pub fn get_configuration() -> Result<Configuration, ConfigError> {
         .add_source(Environment::with_prefix("whitea").separator("__"))
         .build()?;
 
-    cfg.try_deserialize()
+    dbg!(cfg.try_deserialize())
 }

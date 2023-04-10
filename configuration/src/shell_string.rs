@@ -3,7 +3,9 @@ use std::{env::VarError, fmt::Display, str::FromStr};
 use serde::{Deserialize, Serialize};
 use shellexpand::LookupError;
 
-// ShellString is a wrapper around String that expands shell variables upon deserialization or from initialization.
+use crate::YTDLPArguments;
+
+/// ShellString is a wrapper around String that expands shell variables upon deserialization or from initialization.
 #[derive(Debug, Clone, PartialEq, PartialOrd)]
 pub struct ShellString(String);
 
@@ -18,6 +20,12 @@ impl ShellString {
     /// Create a new ShellString. This method will expand shell variables.
     pub fn new<S: AsRef<str>>(s: S) -> Result<Self, LookupError<VarError>> {
         s.as_ref().parse()
+    }
+}
+
+impl YTDLPArguments for ShellString {
+    fn append_arguments(&self, w: &mut Vec<String>) {
+        w.push(self.0.clone())
     }
 }
 

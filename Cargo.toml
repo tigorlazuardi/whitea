@@ -9,6 +9,7 @@ edition = "2021"
 backend = { path = "./backend" }
 configuration = { path = "./configuration" }
 color-eyre = "0.6"
+url = { version = "2.3", features = ["serde"] }
 
 [workspace]
 members = ["backend", "configuration"]

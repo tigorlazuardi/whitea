@@ -3,5 +3,15 @@ backend:
     port: 8100
     log_level: info,tower_http=debug
     ytdlp:
-        # env variable is supported.
+        # env variable is supported for download_dir.
         download_dir: ~/Videos
+
+        ### Extra configs for youtube-dl. Not enabled by default.
+        ### If a particular field is not set, it's considered as disabled.
+
+        # network:
+        #     proxy: socks5://user:pass@127.0.0.1:1080/ # proxy url
+        #     socket_timeout: 10 # seconds
+        #     socket_address: 127.0.0.1:1080 # ip address of the client
+        #     protocol: auto # ipv4, ipv6, or auto. default is auto
+        #

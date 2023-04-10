@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::ShellString;
+use crate::{ShellString, YTDLPConfig};
 
 #[derive(Debug, Deserialize, Serialize, Clone, PartialEq, PartialOrd)]
 pub struct BackendConfig {
@@ -8,9 +8,4 @@ pub struct BackendConfig {
     pub port: u16,
     pub log_level: ShellString,
     pub ytdlp: YTDLPConfig,
-}
-
-#[derive(Debug, Deserialize, Serialize, Clone, PartialEq, PartialOrd)]
-pub struct YTDLPConfig {
-    pub download_dir: ShellString,
 }

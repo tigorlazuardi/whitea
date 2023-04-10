@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gui/drawer.dart';
 import 'package:gui/sidebar.dart';
 
 void main() {
@@ -12,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Whitea',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
